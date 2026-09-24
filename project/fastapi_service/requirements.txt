@@ -3,6 +3,7 @@ uvicorn==0.41.0
 pytest==9.1.1
 httpx==0.28.1
 psycopg2-binary==2.9.12
+pgvector==0.4.1
 python-multipart==0.0.22
 pydantic==2.12.5
 pypdf==6.14.2

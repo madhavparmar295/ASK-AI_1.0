@@ -1,9 +1,8 @@
 from fastapi import APIRouter
 from schemas.query import QueryRequest, QueryResponse, SourceChunk
 from services.access_control import resolve_user_tag
-from services.embeddings import embed_query
 from services.rag import generate_answer
-from services.vectorstore import query_similar
+from services.retrieval import retrieve_chunks
 
 router = APIRouter(prefix="/query", tags=["query"])
 
@@ -13,10 +12,7 @@ async def ask_question(request: QueryRequest):
     domain = request.user_email.split("@")[-1]
     user_tag = resolve_user_tag(domain)
 
-    query_embedding = embed_query(request.question)
-    results = query_similar(query_embedding, user_tag=user_tag, top_k=10)
-
-    matches = results["matches"]
+    matches = retrieve_chunks(request.question, user_tag=user_tag)
     context_chunks = [
         {
             "text": match["metadata"]["text"],

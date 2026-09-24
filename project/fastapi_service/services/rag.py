@@ -9,7 +9,7 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-MODEL = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+MODEL = os.getenv("LLM_MODEL", "qwen/qwen3.8-27b")
 
 SYSTEM_PROMPT = """
 You are an AI assistant for document question answering.

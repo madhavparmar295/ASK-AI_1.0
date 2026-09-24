@@ -1,7 +1,10 @@
+import os
+
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import auth, gmail_webhook, query, upload
+from services.postgres import init_db
 
 load_dotenv()
 
@@ -24,6 +27,16 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
+@app.on_event("startup")
+def on_startup():
+    try:
+        init_db()
+    except Exception:
+        if os.getenv("ENVIRONMENT") == "test" and not (os.getenv("VECTOR_DB_URL") or os.getenv("DATABASE_URL")):
+            return
+        raise
 
 
 app.include_router(auth.router)

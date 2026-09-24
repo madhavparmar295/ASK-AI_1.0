@@ -18,9 +18,8 @@ def get_pinecone_client():
     return _pc
 
 
-# Pinecone's own hosted embedding model — no separate Groq/OpenAI call needed.
-# multilingual-e5-large outputs 1024-dimensional vectors — this number
-# must exactly match the dimension configured in your Pinecone index.
+# 1024-d vectors for Pinecone chunk search (after Postgres picks top documents).
+# Document-level 384-d vectors live in services/doc_embeddings.py.
 EMBEDDING_MODEL = "llama-text-embed-v2"
 EMBEDDING_DIMENSION = 1024
 

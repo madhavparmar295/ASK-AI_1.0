@@ -1,13 +1,8 @@
-
-
 from googleapiclient.discovery import build
-
 from jobs.celery_app import celery_app
-from services.gmail_auth import get_valid_credentials
 from services.email_processing import extract_from_email
-from services.chunking import chunk_record
-from services.embeddings import embed_chunks
-from services.vectorstore import upsert_chunks
+from services.gmail_auth import get_valid_credentials
+from services.ingest import ingest_record
 from services.rate_limiter import acquire_token
 
 
@@ -40,9 +35,7 @@ def process_backfill_batch_task(self, user_id: str, message_ids: list[str]):
     for message_id in message_ids:
         try:
             acquire_token(bucket="gmail_api")
-            message = gmail.users().messages().get(
-                userId="me", id=message_id, format="full"
-            ).execute()
+            message = gmail.users().messages().get(userId="me", id=message_id, format="full").execute()
             _index_email(message, gmail=gmail)
         except Exception as exc:
             # One bad message in a batch shouldn't kill the whole batch;
@@ -52,15 +45,12 @@ def process_backfill_batch_task(self, user_id: str, message_ids: list[str]):
 
 
 def _index_email(message: dict, gmail=None) -> None:
-    """Shared tail end: extract -> chunk -> embed -> upsert, per email."""
+    """Shared tail end: extract -> store document metadata + 384-d vector in Postgres."""
     records = extract_from_email(message, gmail=gmail)
     if not records:
         print(f"[Dedup] Email {message.get('id')} already processed or empty. Skipping.")
         return
 
     for record in records:
-        chunks = chunk_record(record)
-        texts = [c["text"] for c in chunks]
-        embeddings = embed_chunks(texts)
-        upsert_chunks(chunks, embeddings)
-        print(f"[Pinecone] Successfully stored {len(chunks)} chunk(s) for source '{record.get('source')}' (doc_id: {record.get('doc_id')}).")
+        ingest_record(record)
+        print(f"[Postgres] Stored document '{record.get('source')}' " f"(doc_id: {record.get('doc_id')}).")

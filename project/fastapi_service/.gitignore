@@ -4,3 +4,4 @@ client_secret.json
 tokens/
 __pycache__/
 *.pyc
+storage/

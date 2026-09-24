@@ -2,7 +2,6 @@ import os
 
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
-
 from services.embeddings import EMBEDDING_DIMENSION
 
 load_dotenv()
@@ -53,29 +52,47 @@ def upsert_chunks(chunks: list[dict], embeddings: list[list[float]]) -> None:
             if "uploaded_at" in chunk:
                 metadata["uploaded_at"] = chunk["uploaded_at"]
 
-        vectors.append({
-            "id": f"{chunk['doc_id']}-{i}",
-            "values": embedding,
-            "metadata": metadata,
-        })
+        vectors.append(
+            {
+                "id": f"{chunk['doc_id']}-{i}",
+                "values": embedding,
+                "metadata": metadata,
+            }
+        )
     if vectors:
         get_index().upsert(vectors=vectors)
 
-def query_similar(query_embedding: list, user_tag: str = None, top_k: int = 5) -> dict:
+
+def query_similar(
+    query_embedding: list,
+    user_tag: str = None,
+    top_k: int = 5,
+    doc_ids: list[str] | None = None,
+) -> dict:
     """
     Search Pinecone for the most similar chunks.
     Optionally filter by access_level (user_tag) so users only see their org's data.
     Returns a dict with a 'matches' key to match Pinecone's native response shape.
     """
-    filter_dict = None
+    clauses = []
     if user_tag:
         # pyrefly: ignore [missing-import]
         from services.access_control import allowed_access_levels
+
         allowed_levels = allowed_access_levels(user_tag)
         # Always include "general" for email backfill chunks
         if "general" not in allowed_levels:
             allowed_levels.append("general")
-        filter_dict = {"access_level": {"$in": allowed_levels}}
+        clauses.append({"access_level": {"$in": allowed_levels}})
+    if doc_ids:
+        clauses.append({"doc_id": {"$in": doc_ids}})
+
+    if not clauses:
+        filter_dict = None
+    elif len(clauses) == 1:
+        filter_dict = clauses[0]
+    else:
+        filter_dict = {"$and": clauses}
 
     results = get_index().query(
         vector=query_embedding,
@@ -83,16 +100,12 @@ def query_similar(query_embedding: list, user_tag: str = None, top_k: int = 5) -
         include_metadata=True,
         filter=filter_dict,
     )
-    
+
     # Convert Pinecone ScoredVector objects to standard dicts so query.py can use match["metadata"]
     normalized_matches = []
     for m in results.matches:
-        normalized_matches.append({
-            "id": m.id,
-            "score": m.score,
-            "metadata": m.metadata
-        })
-        
+        normalized_matches.append({"id": m.id, "score": m.score, "metadata": m.metadata})
+
     return {"matches": normalized_matches}
 
 
