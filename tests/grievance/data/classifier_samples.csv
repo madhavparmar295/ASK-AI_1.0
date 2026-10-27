@@ -1,0 +1,146 @@
+category|text|flags
+HOS|AC in my room is not working since two days|
+HOS|The fan in room A-101 makes a loud noise and does not rotate properly|
+HOS|My bed frame is broken and the mattress is sagging|
+HOS|Geyser in the hostel bathroom is not giving hot water|
+HOS|Tap in the washbasin outside my room keeps leaking|
+HOS|Pankha band hai room mein aur caretaker sun nahi raha|
+HOS|The chair in my hostel room has a broken leg|
+HOS|Cupboard lock in my room is jammed|
+HOS|Warden has not yet allotted me a room in hostel B|
+HOS|Hostel room window glass is cracked and rain comes inside|
+HOS|Socket near my study table has no power|
+HOS|Cockroaches in my hostel room, need pest control|
+HOS|There is a short circuit and sparking in the switch board of my room|U
+HOS|A student fainted and needs urgent medical help in the hostel|U
+INF|Projector in classroom 204 is not turning on|
+INF|Benches in the lecture hall are broken|
+INF|Lift in the main building stops between floors very often|
+INF|Washrooms near the library block are very dirty and have no water|
+INF|Street lights on the road to the main gate are not working|
+INF|The whiteboard in the lab is damaged and unusable|
+INF|Drinking water cooler on the first floor is not working|
+INF|Ceiling in the corridor is leaking when it rains|
+INF|There are potholes in the parking area near the gate|
+INF|Ramp for wheelchair near the admin block is broken|
+INF|Lab equipment in the electronics laboratory is damaged|
+INF|Classroom ka fan nahi chal raha|
+INF|Smoke is coming out of the AC in the classroom|U
+INF|A student got an electric shock from the open wire near the lab|U
+INF|The lift is stuck with students inside|U
+IT|Wifi is not working in the academic block|
+IT|Internet speed in the whole campus is very slow today|
+IT|I cannot login to the student portal with my password|
+IT|LMS is not showing my course material|
+IT|College email id is not receiving any mails|
+IT|Moodle shows an error when I upload my file|
+IT|ERP portal is down and I cannot see my timetable|
+IT|Router in the computer lab is not working|
+IT|VPN is not connecting from my laptop|
+IT|Net nahi chal raha poore campus mein|
+IT|I did not get the OTP on my college email to reset the password|
+IT|Software license for MATLAB has expired on the lab computers|
+ACA|My attendance is shown as 60 percent but I attended all classes|
+ACA|Timetable for the next semester is not uploaded and classes are clashing|
+ACA|I could not register for the elective because the seats are full|
+ACA|The faculty is not completing the syllabus and lectures are cancelled often|
+ACA|Internal marks for the data structures subject are not updated|
+ACA|Professor is not responding about my project guide allotment|
+ACA|Proxy attendance is being marked for some students in my class|
+ACA|Two lectures are scheduled at the same time for my section|
+ACA|Course credits for my minor are not showing in my record|
+ACA|A mentor has not been assigned to our batch|
+ACA|Assignment marks were not shared by the faculty|
+ACA|Practical classes are not being conducted by the department|
+EXM|My hall ticket does not have my photo and the name is wrong|
+EXM|Result for the fifth semester has not been declared yet|
+EXM|I want to apply for revaluation of my answer sheet|
+EXM|The exam time table clashes for two of my papers|
+EXM|Marksheet shows a wrong grade in mathematics|
+EXM|Supplementary exam form is not available on the portal|
+EXM|Invigilator was allowing copying in our exam hall|
+EXM|Question paper was out of syllabus|
+EXM|Admit card not received for the end semester examination|
+EXM|My CGPA calculation is wrong in the latest grade card|
+EXM|Backlog exam date has not been announced|
+EXM|Seating arrangement for the exam is not displayed|
+FEE|I paid the tuition fee but it is not updated in the system|
+FEE|Need a refund of caution deposit after leaving the hostel|
+FEE|Fee receipt for last semester is not available on the portal|
+FEE|Late fee fine charged even though I paid before the due date|
+FEE|Payment was deducted from my bank but the challan shows unpaid|
+FEE|Fee structure has extra charges that were not mentioned|
+FEE|Scholarship amount adjusted wrongly in my tuition fees|
+FEE|Double payment happened for the exam fee|
+FEE|Accounts section refused to accept my demand draft|
+FEE|Transaction failed but money got deducted during fee payment|
+FEE|Fees ka receipt nahi mila|
+FEE|Hostel fee is charged twice in my account|
+SCH|Scholarship has not been credited to my bank account this year|
+SCH|I need a bonafide certificate for a bank loan application|
+SCH|Transcript request is pending for three weeks|
+SCH|Student ID card is lost and I need a duplicate|
+SCH|NOC for internship has not been issued yet|
+SCH|Transfer certificate application is stuck at the office|
+SCH|Stipend for the research fellowship is delayed|
+SCH|Income certificate verification for scholarship is pending|
+SCH|Degree provisional certificate is not ready|
+SCH|Need a character certificate for passport verification|
+SCH|Migration certificate is required for my higher studies|
+SCH|No dues certificate is not being issued by the office|
+LIB|Library is closing early and I cannot access books in the evening|
+LIB|The book I need is not available in the library catalogue|
+LIB|Librarian is charging a fine for a book I returned on time|
+LIB|Reading room has no proper seating and it is very noisy|
+LIB|I cannot access e-journals from the library website|
+LIB|Library card is not working at the entry gate|
+LIB|Need an extension for borrowing the reference book|
+LIB|Books on machine learning are outdated|
+LIB|Library AC is not working during summer|
+LIB|New books requested by students are not purchased|
+LIB|Not able to renew my borrowed books online|
+LIB|Library timings should be extended during exams|
+TRN|College bus is always late in the morning|
+TRN|Bus route 5 does not stop near my area|
+TRN|The bus driver is not following the schedule|
+TRN|Need a bus pass for this semester|
+TRN|Shuttle service from the metro station is not running|
+TRN|Bus timing in the evening should be extended|
+TRN|No seats available in the bus and many students stand|
+TRN|Bus stop near the main gate has no shelter|
+TRN|Transport office has not issued my bus card|
+TRN|Bus ka AC kharab hai|
+TRN|A new bus route is needed for students from the north side|
+TRN|Pickup point was changed without informing students|
+MES|Food in the mess is not fresh and tastes stale|
+MES|Found a cockroach in the dal served at dinner|
+MES|Canteen is overcharging for snacks|
+MES|Mess menu is repeated every day and has no variety|
+MES|Water jug in the mess is dirty|
+MES|Breakfast is served late and cold|
+MES|Khana bahut kharab hai mess ka|
+MES|Hygiene in the kitchen is very poor|
+MES|Mess workers are not wearing gloves or caps|
+MES|Quantity of rice and chapati is less at lunch|
+MES|Canteen prices were increased suddenly|
+MES|Gas smell in the mess kitchen, possible leak|U
+CON|A senior is ragging first year students in my hostel|C
+CON|A professor made inappropriate comments about my appearance|C
+CON|I am being threatened by a classmate on social media|CU
+CON|Someone is stalking me near the campus gate|C
+CON|I faced caste based discrimination from a faculty member|C
+CON|My roommate keeps harassing me and I feel unsafe|C
+CON|Eve teasing near the bus stop every evening|C
+CON|I am being blackmailed with my personal photos|C
+CON|Bullying by a group of students in our class|C
+CON|Mujhe dhamki di ja rahi hai hostel mein|C
+CON|Seniors forced me to do things against my will, this is ragging|C
+CON|I feel unsafe walking back from the library after evening|
+OTH|I want to suggest starting a photography club|
+OTH|Wrong spelling of my name on the notice board list|
+OTH|Parents day event details are not shared with us|
+OTH|Not able to find where the lost and found desk is|
+OTH|General query about the annual college event|
+OTH|Need help to contact the placement cell|
+OTH|The sports kit for the cricket team is not provided|
+OTH|Noise from the construction work near the department|

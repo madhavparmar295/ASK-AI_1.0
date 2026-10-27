@@ -1,0 +1,743 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   RESET & THEME VARIABLES (MIDNIGHT NAVY MONOCHROMATIC LOOK)
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-color: #060913;
+  --bg-elevated: #0a0f20;
+  --border-color: rgba(148, 175, 215, 0.1);
+  --border-hover: rgba(180, 210, 255, 0.28);
+  --text-main: #f0f4fc;
+  --text-muted: #8ca0ba;
+  --surface-glass: rgba(13, 20, 36, 0.55);
+  --surface-hover: rgba(20, 30, 52, 0.65);
+  --sidebar-width: 250px;
+  --accent-navy-glow: rgba(59, 130, 246, 0.12);
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle Geometric Background Grid with Navy Tint */
+.grid-background {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(148, 175, 215, 0.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 175, 215, 0.038) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Soft ambient central navy glow */
+.ambient-glow {
+  position: fixed;
+  top: 30%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 750px;
+  height: 480px;
+  background: radial-gradient(ellipse at center, rgba(30, 60, 120, 0.2) 0%, rgba(14, 25, 50, 0.1) 45%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   1. GEMINI-STYLE SPLASH SCREEN (ANIMATED LOGO)
+   ========================================================================== */
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#splash-screen.hidden {
+  opacity: 0;
+  transform: scale(1.02);
+  pointer-events: none;
+}
+
+.splash-logo-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: splashScaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes splashScaleIn {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.splash-logo-container svg {
+  width: 320px;
+  height: auto;
+  overflow: visible;
+}
+
+/* Animated white racing beam with ice-blue glow */
+.splash-runner {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 13;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 190 700;
+  stroke-dashoffset: 0;
+  animation: splashBeamSweep 1.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  filter: drop-shadow(0 0 10px rgba(180, 215, 255, 0.95))
+          drop-shadow(0 0 25px rgba(59, 130, 246, 0.45));
+}
+
+@keyframes splashBeamSweep {
+  0% { stroke-dashoffset: 890; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Radial shockwave burst before reveal */
+.splash-shockwave {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 1px solid rgba(160, 205, 255, 0.7);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-shockwave.trigger {
+  animation: shockwaveExpand 0.7s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes shockwaveExpand {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.5); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.8); }
+}
+
+/* ==========================================================================
+   2. SIDEBAR NAVIGATION (STATIC LOGO)
+   ========================================================================== */
+.sidebar {
+  position: relative;
+  width: var(--sidebar-width);
+  height: 100vh;
+  border-right: 1px solid var(--border-color);
+  background: rgba(6, 9, 19, 0.88);
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+/* Top Brand Slot - Completely Static */
+.brand-slot {
+  margin-bottom: 28px;
+  padding-left: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.static-logo-svg {
+  width: 125px;
+  height: auto;
+  overflow: visible;
+}
+
+/* New Chat Pill Button */
+.btn-new-chat {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(148, 175, 215, 0.18);
+  color: #ffffff;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 24px;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.04);
+}
+
+.btn-new-chat:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(180, 210, 255, 0.38);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 9px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 450;
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--text-main);
+  background: rgba(148, 175, 215, 0.06);
+}
+
+.nav-item svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.8;
+  stroke: currentColor;
+}
+
+/* Account Badge */
+.account-badge {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(13, 20, 36, 0.6);
+  border: 1px solid var(--border-color);
+  margin-top: auto;
+}
+
+.account-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #060913;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-info {
+  overflow: hidden;
+}
+
+.account-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.account-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+/* ==========================================================================
+   3. MAIN VIEWPORT & GREETING
+   ========================================================================== */
+.main-content {
+  position: relative;
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 32px;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+/* Replay entrance button top right */
+.top-actions {
+  align-self: flex-end;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-action-ghost {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-action-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(180, 210, 255, 0.25);
+}
+
+/* Center Stage Container */
+.center-stage {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.greeting-title {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  background: linear-gradient(180deg, #ffffff 30%, #a8bcd8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.greeting-subtitle {
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: -0.5px;
+  margin-bottom: 42px;
+}
+
+/* ==========================================================================
+   4. FOUR PROMPT CARDS (WITH DYNAMIC SPOTLIGHT)
+   ========================================================================== */
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.prompt-card {
+  position: relative;
+  background: var(--surface-glass);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 22px 18px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.24s ease,
+              box-shadow 0.24s ease;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  min-height: 135px;
+}
+
+.prompt-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(180, 210, 255, 0.28);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5),
+              0 0 20px rgba(59, 130, 246, 0.08);
+}
+
+/* Dynamic cursor-following spotlight glow */
+.prompt-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    220px circle at var(--mouse-x, -200px) var(--mouse-y, -200px),
+    rgba(160, 205, 255, 0.09),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.prompt-card:hover::before {
+  opacity: 1;
+}
+
+.card-icon-pill {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(148, 175, 215, 0.06);
+  border: 1px solid rgba(148, 175, 215, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  margin-bottom: 14px;
+  z-index: 2;
+}
+
+.card-icon-pill svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.9;
+  stroke: currentColor;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  z-index: 2;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  z-index: 2;
+}
+
+/* Active Chat Response View */
+.chat-stream-box {
+  width: 100%;
+  background: var(--surface-glass);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(14px);
+  animation: fadeIn 0.3s ease;
+}
+
+.stream-user-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stream-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #e4e7ec;
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  background: #ffffff;
+  margin-left: 4px;
+  animation: blink 0.8s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   5. FLOATING CAPSULE INPUT BAR
+   ========================================================================== */
+.input-section {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.capsule-box {
+  width: 100%;
+  background: rgba(10, 16, 30, 0.75);
+  border: 1px solid rgba(148, 175, 215, 0.12);
+  border-radius: 30px;
+  padding: 8px 12px 8px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4),
+              0 0 1px rgba(148, 175, 215, 0.1);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.capsule-box:focus-within {
+  border-color: rgba(180, 210, 255, 0.32);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6),
+              0 0 20px rgba(59, 130, 246, 0.08);
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.18s ease;
+}
+
+.icon-btn:hover {
+  color: #ffffff;
+  background: rgba(148, 175, 215, 0.08);
+}
+
+.icon-btn svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.8;
+  stroke: currentColor;
+}
+
+.main-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+}
+
+.main-input::placeholder {
+  color: #5c6b84;
+}
+
+.btn-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  color: #060913;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-send:hover {
+  transform: scale(1.05);
+  background: #f0f4fc;
+}
+
+.btn-send svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.2;
+  stroke: currentColor;
+  fill: none;
+}
+
+.disclaimer-text {
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+}
+
+/* ==========================================================================
+   SCROLLBAR & UTILITIES
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 175, 215, 0.14);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(180, 210, 255, 0.28);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideRight {
+  animation: slideRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Markdown Rendering Styles */
+.prose-chat table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.prose-chat th {
+  background: rgba(148, 175, 215, 0.08);
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 12px;
+  border: 1px solid rgba(148, 175, 215, 0.12);
+}
+
+.prose-chat td {
+  padding: 8px 12px;
+  border: 1px solid rgba(148, 175, 215, 0.08);
+  color: #d1d5db;
+}
+
+.prose-chat tr:nth-child(even) {
+  background: rgba(148, 175, 215, 0.02);
+}
+
+.prose-chat ul,
+.prose-chat ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.prose-chat li {
+  margin: 4px 0;
+}
+
+.prose-chat strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.prose-chat p {
+  margin: 6px 0;
+  line-height: 1.6;
+}
+
+.prose-chat code {
+  background: rgba(148, 175, 215, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVE QUERIES
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .greeting-title { font-size: 38px; }
+  .greeting-subtitle { font-size: 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -270px;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sidebar.mobile-open {
+    left: 0;
+  }
+  .cards-row {
+    grid-template-columns: 1fr;
+  }
+  .greeting-title {
+    font-size: 32px;
+  }
+  .greeting-subtitle {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+  .main-content {
+    padding: 20px 16px;
+  }
+}

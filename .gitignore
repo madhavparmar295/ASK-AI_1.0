@@ -1,0 +1,32 @@
+venv/
+.env
+client_secret.json
+tokens/
+__pycache__/
+*.pyc
+ocr_cache.json
+processed_message_ids.json
+storage/
+lexical_index.db
+*.db-journal
+test_askai.db
+*.log
+test_processed_message_ids.json
+test_ocr_cache.json
+indexed_file_hashes.json
+askai.db
+
+# Grievance system (local development state)
+grievance.db
+test_grievance.db
+uploads/
+
+# Any local SQLite/SQL database file - local state, never published
+*.db
+*.sqlite
+*.sqlite3
+
+# Local session records: they contain a live API key and personal data
+CHAT_SNAPSHOT_INFO.json
+FULL_CHAT_HISTORY_AND_ARCHITECTURE_RECORD.md
+SESSION_CHANGELOG_AND_ARCHITECTURE.md

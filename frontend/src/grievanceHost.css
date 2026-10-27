@@ -1,0 +1,30 @@
+/*
+ * The chat shell constrains #root to a centred column with a border (see index.css) and
+ * locks page scrolling, which is right for a single-screen chat and wrong for a set of
+ * pages with their own header, tables and forms.
+ *
+ * `body.grievance-mode` is set by App.jsx only while a /grievance address is open, so
+ * the chat is untouched. The selector is deliberately more specific than the plain
+ * `#root` rule and wins regardless of stylesheet order.
+ */
+body.grievance-mode {
+  background: #060913;
+  overflow: auto;
+}
+
+body.grievance-mode #root {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 100vh;
+  margin: 0;
+  border: 0;
+  text-align: left;
+  display: block;
+  overflow: visible;
+}
+
+/* The module's own frame already provides the page padding; keep the surface flat. */
+body.grievance-mode .grievance-surface {
+  min-height: 100vh;
+}
